@@ -43,6 +43,7 @@
         let battery = 0;
         let lightOn = false;
         let charging = false;
+        let tickCount = 0;
 
         function updateDisplay() {
             const lightElement = document.getElementById("light");
@@ -79,14 +80,17 @@
         });
 
         setInterval(() => {
-            if (charging && battery < 100) {
+            tickCount++;
+
+            // Slow down charging: increase battery only every 2 ticks (2 seconds)
+            if (charging && battery < 100 && tickCount % 2 === 0) {
                 battery += 1;
             } else if (!charging && battery > 0) {
                 battery -= 1;
             }
             toggleLight();
             updateDisplay();
-        }, 1000); // now battery only charges once per second
+        }, 1000); // runs every second
 
         updateDisplay();
     </script>
