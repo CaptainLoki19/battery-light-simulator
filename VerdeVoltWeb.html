@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Light Simulator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #screen {
+            width: 600px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+            margin-bottom: 20px;
+        }
+        #light {
+            font-size: 2em;
+        }
+        #battery {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="screen">
+        <div id="light">Light: Off</div>
+        <div id="battery">Battery: 0%</div>
+    </div>
+    <p>Press SPACE to simulate stepping on one of our pressure plates to generate energy.</p>
+
+    <script>
+        let battery = 0;
+        let lightOn = false;
+        let charging = false;
+
+        function updateDisplay() {
+            const lightElement = document.getElementById("light");
+            const batteryElement = document.getElementById("battery");
+
+            if (lightOn) {
+                lightElement.textContent = "Light: On";
+                lightElement.style.color = "black";
+                document.body.style.backgroundColor = "white";
+            } else {
+                lightElement.textContent = "Light: Off";
+                lightElement.style.color = "white";
+                document.body.style.backgroundColor = "black";
+            }
+
+            batteryElement.textContent = `Battery: ${battery}%`;
+            batteryElement.style.color = battery <= 10 ? "red" : "blue";
+        }
+
+        function toggleLight() {
+            lightOn = battery > 0;
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                charging = true;
+            }
+        });
+
+        document.addEventListener("keyup", (event) => {
+            if (event.code === "Space") {
+                charging = false;
+            }
+        });
+
+        setInterval(() => {
+            if (charging && battery < 100) {
+                battery = Math.min(100, battery + 2); // faster charging
+            } else if (!charging && battery > 0) {
+                battery = Math.max(0, battery - 2); // faster draining
+            }
+            toggleLight();
+            updateDisplay();
+        }, 500); // update every 0.5 seconds
+
+        updateDisplay();
+    </script>
+<
