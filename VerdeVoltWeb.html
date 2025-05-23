@@ -83,7 +83,7 @@
             tickCount++;
 
             // Slow down charging: increase battery only every 2 ticks (2 seconds)
-            if (charging && battery < 100 && tickCount % 2 === 0) {
+            if (charging && battery < 100 && tickCount % 1 === 0) {
                 battery += 1;
             } else if (!charging && battery > 0) {
                 battery -= 1;
