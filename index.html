@@ -37,7 +37,7 @@
         <div id="light">Light: Off</div>
         <div id="battery">Battery: 0%</div>
     </div>
-    <p>Press SPACE to charge the battery.</p>
+    <p>Press SPACE to simulate stepping on one of our pressure plates to generate energy.</p>
 
     <script>
         let battery = 0;
@@ -90,7 +90,7 @@
             }
             toggleLight();
             updateDisplay();
-        }, 1000); // runs every second
+        }, 100); // runs every second
 
         updateDisplay();
     </script>
